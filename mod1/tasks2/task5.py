@@ -1,0 +1,5 @@
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".lower()
+string = str(input())
+firstSpace = string.find(" ")
+b = int(string[firstSpace + 1:])
+print(alphabet[alphabet.find(string[:firstSpace]) + b:alphabet.find(string[:firstSpace])+b+1])
