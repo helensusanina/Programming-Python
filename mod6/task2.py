@@ -19,7 +19,9 @@ class DoubleElement:
 dL = DoubleElement(1, 2, 3, 4)
 for pair in dL:
     print(pair)
+
 print()
+
 dL = DoubleElement(1, 2, 3, 4, 5)
 for pair in dL:
     print(pair)

@@ -68,6 +68,5 @@ print(linked_list.get(2))
 
 linked_list.remove(1)
 print(list(linked_list))
-
 linked_list.insert(1, 2)
 print(list(linked_list))

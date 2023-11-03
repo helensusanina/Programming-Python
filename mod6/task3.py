@@ -9,7 +9,6 @@ def get_armstrong_numbers():
         total += 1
 
 cnt = 0
-
 for i in get_armstrong_numbers():
     if cnt < 8:
         print(i, end=' ')
