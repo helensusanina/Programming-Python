@@ -1,51 +1,49 @@
 import re
 import doctest
 
-def is_valid_date(date_string):
+
+def validate_date(date):
     """
-    Проверка корректности даты по различным критериям
+    >>> validate_date("25.08-1002")
+    False
 
-    >>> is_valid_date('20 января 1806')
+    >>> validate_date("декабря 19, 1838")
+    False
+
+    >>> validate_date("8.20.1973")
+    False
+
+    >>> validate_date("Jun 7, -1563")
+    False
+
+    >>> validate_date("31 февраля 2023")
+    False
+
+    >>> validate_date("31 июня 2015")
+    False
+
+    >>> validate_date("20 января 1806")
     True
-    >>> is_valid_date('1924, July 25')
+
+    >>> validate_date("1924, July 25")
     True
-    >>> is_valid_date('26/09/1635')
+
+    >>> validate_date("29/09/1635")
     True
-    >>> is_valid_date('3.1.1506')
+
+    >>> validate_date("3.1.1506")
     True
-    >>> is_valid_date('25.08-1002')
-    False
-    >>> is_valid_date('декабря 19, 1838')
-    False
-    >>> is_valid_date('8.20.1973')
-    False
-    >>> is_valid_date('Jun 7, -1563')
-    False
-    >>> is_valid_date('31 февраля 2023')
-    False
-    >>> is_valid_date('31 июня 2015')
-    False
 
     """
-    pattern = (
-        r"^(?:(?:(?:(?:0[1-9]|[12][0-9]|3[01])[./-](?:0[1-9]|1[0-2])[./-]\d{4})|"
-        r"(?:\d{4}[./-](?:0[1-9]|1[0-2])[./-](?:0[1-9]|[12][0-9]|3[01]))|"
-        r"(?:\d{1,2} (?:января|февраля|марта|апреля|мая|июня|июля|августа|сентября|"
-        r"октября|ноября|декабря) \d{4}))|"
-        r"(?:(?:\d{4}, (?:January|February|March|April|May|June|July|August|September|"
-        r"October|November|December) \d{1,2})|"
-        r"(?:\d{4}, (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{1,2})|"
-        r"(?:\d{1,2} (?:January|February|March|April|May|June|July|August|September|"
-        r"October|November|December), \d{4})|"
-        r"(?:\d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec), \d{4})))$"
-    )
-
-    non_negative_check = r"(?=.*\d)(?!0\d)"
-    full_regex = non_negative_check + pattern
-
-    match = re.match(full_regex, date_string)
-
-    return bool(match)
+    pattern = (r"^(?:(?:0?\d|[12]\d|3[01])([\.\/-])(?:(?<!3[01][\.\/-])0?2|(?<!31[\.\/-])0?[469]|0?[^2469]|12)\1\d{"
+               r"4}|\d{4}([\.\/-])(?:0?2(?![\.\/-]3[01])|0?[469](?!31[\.\/-])|0?[^2469]|12)\2(?:0?\d|[12]\d|3[01])|("
+               r"?:[0-2]\d|3[01]) (?:января|(?<!3[01] )февраля|марта|(?<!31 )("
+               r"?:апреля|июня|сентября|ноября)|мая|июля|августа|октября|декабря) \d{4}|(?:Jan(?:uary)?|Feb("
+               r"?:ruary)?(?! 3[01])|Mar(?:ch)?|(?:Apr(?:il)?|June?|Sep(?:tember)?|Nov(?:ember)?)(?! "
+               r"31)|May|July?|Aug(?:ust)?|Oct(?:ober)?|Dec(?:ember)?) (?:[0-2]\d|3[01]), \d{4}|\d{4}, "
+               r"(?:Jan(?:uary)?|Feb(?:ruary)?(?! 3[01])|Mar(?:ch)?|(?:Apr(?:il)?|June?|Sep(?:tember)?|Nov("
+               r"?:ember)?)(?! 31)|May|July?|Aug(?:ust)?|Oct(?:ober)?|Dec(?:ember)?) (?:[0-2]\d|3[01]))$")
+    return bool(re.match(pattern, date))
 
 
-doctest.testmod()
+doctest.testmod(verbose=True)
